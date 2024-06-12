@@ -23,7 +23,12 @@ extern "C"
     /*
      * Beacon update ...
      */
-    void beacon_update(const char *name);
+    void beacon_update_name(const char *name);
+
+    /*
+     * Beacon update ...
+     */
+    void beacon_update_names(const char *complete_name, size_t complete_name_length, const char *short_name, size_t short_name_length);
 
 #ifdef __cplusplus
 }

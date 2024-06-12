@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 3.20.0)
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
-project(guva-s12sd_uv-meter_beacon)
+project(GUVA-S12D_UV_Index_Meter_BLE_Beacon)
 
 target_include_directories(app PRIVATE 
     src

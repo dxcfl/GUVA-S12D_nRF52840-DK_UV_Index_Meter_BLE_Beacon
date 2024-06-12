@@ -1,4 +1,4 @@
-/* main.c - UV meter beacon w/ GUVA-S12SD UV sensor */
+/* main.c - UV index meter beacon w/ GUVA-S12SD UV sensor */
 
 /* Copyright (c) 2024 dxcfl
  * Based on the Nordic SDK examples Copyright (c) 2024 Nordic Semiconductor ASA 
@@ -25,6 +25,19 @@ static const char *uv_index_str(float uv_index)
 {
 	static char buf[16];
 	snprintf(buf, sizeof(buf), "UV index: %.1f", uv_index);
+	return buf;
+}
+
+/* Auxiliary function: Format UV index value as a string.
+ *
+ * @param uv_index UV index value.
+ *
+ * @return UV index value as a string.
+ */
+static const char *uv_index_short_str(float uv_index)
+{
+	static char buf[16];
+	snprintf(buf, sizeof(buf), "UVI=%.1f", uv_index);
 	return buf;
 }
 
@@ -77,7 +90,6 @@ int main(void)
 	while (1)
 	{
 		int val_mv;
-		float uv_index;
 
 		/* read a sample from the ADC ...*/
 		err = adc_read(adc_channel.dev, &sequence);
@@ -100,13 +112,20 @@ int main(void)
 		}
 		else
 		{
+			float uv_index;
+			const char *beacon_name_short;
+			const char *beacon_name_complete;
+
 			LOG_INF(" = %d mV", val_mv);
 			/* calculate UV index ...*/
 			uv_index = GUVA_S12SD_uv_index(val_mv);
 			LOG_INF("UV index = %.1f", uv_index);
+
 			/* update the beacon's name ...*/
+			beacon_name_short = uv_index_short_str(uv_index);
+			beacon_name_complete = uv_index_str(uv_index);
 			LOG_INF("Updating beacon name ...");
-			beacon_update(uv_index_str(uv_index));
+			beacon_update_names(beacon_name_complete,strlen(beacon_name_complete),beacon_name_short,strlen(beacon_name_short));
 		}
 
 		k_sleep(K_MSEC(1000));
