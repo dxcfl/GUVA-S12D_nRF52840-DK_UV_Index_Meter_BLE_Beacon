@@ -1,2 +1,2 @@
-# guva-s12sd_uv-meter_beacon
+# GUVA-S12D - nRF52840 DK - UV Meter BLE Beacon
 A simple UV meter BLE beacon ...
