@@ -15,6 +15,9 @@
 #include <GUVA_S12SD.h>
 #include <beacon.h>
 
+#define SLEEP_TIME CONFIG_BEACON_UPDATE_INTERVAL
+
+
 /* Auxiliary function: Format UV index value as a string.
  *
  * @param uv_index UV index value.
@@ -128,7 +131,8 @@ int main(void)
 			beacon_update_names(beacon_name_complete,strlen(beacon_name_complete),beacon_name_short,strlen(beacon_name_short));
 		}
 
-		k_sleep(K_MSEC(1000));
+		LOG_INF("Sleeping %d msec ...",SLEEP_TIME);
+		k_sleep(K_MSEC(SLEEP_TIME));
 	}
 	return 0;
 }

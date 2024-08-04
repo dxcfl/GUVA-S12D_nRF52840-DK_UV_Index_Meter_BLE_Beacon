@@ -1,0 +1,6 @@
+source "Kconfig.zephyr"
+
+config BEACON_UPDATE_INTERVAL
+  int "Beacon updated interval in milliseconds"
+  default 1000
+
